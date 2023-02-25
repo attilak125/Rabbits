@@ -1,5 +1,7 @@
 package com.cala.rabbits.controllers;
 
+import com.cala.rabbits.exception.InvalidIdException;
+import com.cala.rabbits.exception.RequestBodyMissingException;
 import com.cala.rabbits.models.dto.TrainingDTO;
 import com.cala.rabbits.services.TrainingService;
 import org.springframework.http.HttpStatus;
@@ -9,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -29,7 +30,7 @@ public class TrainingController {
   @PostMapping("/trainings")
   public ResponseEntity addTraining(@RequestBody TrainingDTO trainingDTO){
     if (trainingDTO==null){
-      return ResponseEntity.noContent().build();
+      throw new RequestBodyMissingException();
     }
     trainingService.addTraining(trainingDTO);
     return ResponseEntity.status(HttpStatus.CREATED).body(trainingDTO);
@@ -37,19 +38,17 @@ public class TrainingController {
 
   @GetMapping("/trainings/{id}")
   public ResponseEntity findTrainingById(@PathVariable Long id){
-    if (id == null){
-      return ResponseEntity.noContent().build();
-    }else if(!trainingService.existsTrainingById(id)){
-      return ResponseEntity.notFound().build();
+    if (id < 0 || !trainingService.existsTrainingById(id)){
+      throw new InvalidIdException();
     }
     return ResponseEntity.ok().body(trainingService.findTrainingDtoById(id));
   }
   @PostMapping("/trainings/{id}")
   public ResponseEntity updateTrainingById(@PathVariable Long id, @RequestBody TrainingDTO trainingDTO){
-    if (id==null || trainingDTO == null){
-      return ResponseEntity.noContent().build();
-    }else if(!trainingService.existsTrainingById(id)){
-      return ResponseEntity.notFound().build();
+    if (id < 0 || !trainingService.existsTrainingById(id)){
+      throw new InvalidIdException();
+    } else if(trainingDTO == null){
+      throw new RequestBodyMissingException();
     }
     trainingService.updateTraining(id,trainingDTO);
     return ResponseEntity.ok().body(trainingDTO);
@@ -57,10 +56,8 @@ public class TrainingController {
 
   @DeleteMapping("/trainings/{id}")
   public ResponseEntity deleteTrainingById(@PathVariable Long id){
-    if (id==null){
-      return ResponseEntity.noContent().build();
-    }else if (!trainingService.existsTrainingById(id)){
-      return ResponseEntity.notFound().build();
+    if (id < 0 || !trainingService.existsTrainingById(id)){
+      throw new InvalidIdException();
     }
     TrainingDTO deletedTraining = trainingService.deleteTrainingById(id);
     return ResponseEntity.ok().body(deletedTraining);
