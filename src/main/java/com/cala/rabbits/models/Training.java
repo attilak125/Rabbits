@@ -17,8 +17,8 @@ public class Training {
   private LocalDate creationDate;
   private String exercises;
 
-  public Training(String type, LocalDate creationDate, String exercises) {
-    this.type = type;
+  public Training(TrainingType type, LocalDate creationDate, String exercises) {
+    this.type = type.toString();
     this.creationDate = creationDate;
     this.exercises = exercises;
   }
