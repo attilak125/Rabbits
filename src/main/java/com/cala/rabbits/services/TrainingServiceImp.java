@@ -16,7 +16,38 @@ public class TrainingServiceImp implements TrainingService{
 
   @Override
   public List<TrainingDTO> findallDTO() {
-    return trainingRepository.findAll().stream().map(this::trainingConvertToDTO);
+    return trainingRepository.findAll().stream().map(this::trainingConvertToDTO).toList();
+  }
+
+  @Override
+  public void addTraining(TrainingDTO trainingDTO) {
+    trainingRepository.save(new Training(trainingDTO.getType(),trainingDTO.getCreationDate(),trainingDTO.getExercises()));
+  }
+
+  @Override
+  public TrainingDTO findTrainingDtoById(long id) {
+    return trainingConvertToDTO(trainingRepository.findById(id).orElseThrow());
+  }
+
+  @Override
+  public boolean existsTrainingById(long id) {
+    return trainingRepository.existsById(id);
+  }
+
+  @Override
+  public TrainingDTO deleteTrainingById(long id) {
+    Training deletedTraining = trainingRepository.findById(id).orElseThrow();
+    trainingRepository.deleteById(id);
+    return trainingConvertToDTO(deletedTraining);
+  }
+
+  @Override
+  public void updateTraining(long id, TrainingDTO trainingDTO) {
+    Training training = trainingRepository.findById(id).orElseThrow();
+    training.setType(trainingDTO.getType());
+    training.setCreationDate(trainingDTO.getCreationDate());
+    training.setExercises(trainingDTO.getExercises());
+    trainingRepository.save(training);
   }
 
   private TrainingDTO trainingConvertToDTO(Training training){
