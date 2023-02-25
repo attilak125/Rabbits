@@ -1,5 +1,6 @@
 package com.cala.rabbits.models.dto;
 
+import com.cala.rabbits.models.TrainingType;
 import java.time.LocalDate;
 
 public class TrainingDTO {
@@ -8,18 +9,18 @@ public class TrainingDTO {
   private LocalDate creationDate;
   private String exercises;
 
-  public TrainingDTO(String type, LocalDate creationDate, String exercises) {
-    this.type = type;
+  public TrainingDTO(TrainingType type, LocalDate creationDate, String exercises) {
+    this.type = type.toString();
     this.creationDate = creationDate;
     this.exercises = exercises;
   }
 
-  public String getType() {
-    return type;
+  public TrainingType getType() {
+    return TrainingType.valueOf(type);
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setType(TrainingType type) {
+    this.type = type.toString();
   }
 
   public LocalDate getCreationDate() {
