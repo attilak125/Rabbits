@@ -1,6 +1,7 @@
 package com.cala.rabbits.controllers;
 
 import com.cala.rabbits.models.AuthenticationResponse;
+import com.cala.rabbits.models.RegisterRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
