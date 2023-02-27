@@ -1,5 +1,6 @@
 package com.cala.rabbits.controllers;
 
+import com.cala.rabbits.config.AuthenticationService;
 import com.cala.rabbits.models.AuthenticationRequest;
 import com.cala.rabbits.models.AuthenticationResponse;
 import com.cala.rabbits.models.RegisterRequest;
@@ -12,6 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
   private final AuthenticationService authenticationService;
+
+  public UserController(AuthenticationService authenticationService) {
+    this.authenticationService = authenticationService;
+  }
 
   @PostMapping("/register")
   public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request){
