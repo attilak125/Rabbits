@@ -1,8 +1,8 @@
 package com.cala.rabbits.config;
 
-import com.cala.rabbits.models.AuthenticationRequest;
-import com.cala.rabbits.models.AuthenticationResponse;
-import com.cala.rabbits.models.RegisterRequest;
+import com.cala.rabbits.models.dto.AuthenticationRequest;
+import com.cala.rabbits.models.dto.AuthenticationResponse;
+import com.cala.rabbits.models.dto.RegisterRequest;
 import com.cala.rabbits.models.Role;
 import com.cala.rabbits.models.User;
 import com.cala.rabbits.repositories.UserRepository;
@@ -33,13 +33,12 @@ public class AuthenticationService {
         .lastname(request.getLastname())
         .email(request.getEmail())
         .password(request.getPassword())
-        .role(Role.Member)
+        .role(request.getRole())
         .build();
     userRepository.save(user);
     var jwtToken = jwtService.generateToken(user);
     return AuthenticationResponse.builder().token(jwtToken).build();
   }
-
 
   public AuthenticationResponse login(AuthenticationRequest request) {
     authenticationManager.authenticate(

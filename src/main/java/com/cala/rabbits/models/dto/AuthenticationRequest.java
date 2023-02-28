@@ -1,4 +1,4 @@
-package com.cala.rabbits.models;
+package com.cala.rabbits.models.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
