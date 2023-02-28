@@ -2,10 +2,14 @@ package com.cala.rabbits.config;
 
 import com.cala.rabbits.models.dto.AuthenticationRequest;
 import com.cala.rabbits.models.dto.AuthenticationResponse;
+import com.cala.rabbits.models.dto.EmailVerificationRequest;
 import com.cala.rabbits.models.dto.RegisterRequest;
 import com.cala.rabbits.models.User;
 import com.cala.rabbits.repositories.UserRepository;
 import com.cala.rabbits.services.EmailService;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.UUID;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,11 +40,14 @@ public class AuthenticationService {
         .email(request.getEmail())
         .password(request.getPassword())
         .role(request.getRole())
+        .enabled(false)
+        .emailVerificationToken(UUID.randomUUID().toString())
         .build();
     userRepository.save(user);
-    var jwtToken = jwtService.generateToken(user);
-    emailService.sendSimpleMessage(request.getEmail(),"Register","thank you for registering.");
-    return AuthenticationResponse.builder().token(jwtToken).build();
+    emailService.sendSimpleMessage(request.getEmail(),"Register","Thenk you for registering!\n "
+        + "We would like to ask you to verify your email address with the following link:"
+        + " http://localhost:8080/user/email/verification/"+ user.getEmailVerificationToken());
+    return AuthenticationResponse.builder().build();
   }
 
   public AuthenticationResponse login(AuthenticationRequest request) {
@@ -51,5 +58,19 @@ public class AuthenticationService {
     var user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User name not found"));
     var jwtToken = jwtService.generateToken(user);
     return AuthenticationResponse.builder().token(jwtToken).build();
+  }
+
+
+  public AuthenticationResponse emailVerification(AuthenticationRequest request, String emailVerificationToken) {
+    var user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User name not found"));
+    if (!user.getEmailVerificationToken().equals(emailVerificationToken)){
+      throw new RuntimeException("Wrong email verification token!");
+    }
+    user.setEmailVerificationToken(null);
+    user.setEnabled(true);
+    user.setVerifiedAt(LocalDate.now().toString());
+    userRepository.save(user);
+    var jwtToken = jwtService.generateToken(user);
+    return AuthenticationResponse.builder().token(jwtToken).build() ;
   }
 }
