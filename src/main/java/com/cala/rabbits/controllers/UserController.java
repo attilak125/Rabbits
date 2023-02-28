@@ -4,6 +4,7 @@ import com.cala.rabbits.config.AuthenticationService;
 import com.cala.rabbits.models.dto.AuthenticationRequest;
 import com.cala.rabbits.models.dto.AuthenticationResponse;
 import com.cala.rabbits.models.dto.RegisterRequest;
+import com.cala.rabbits.services.EmailService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

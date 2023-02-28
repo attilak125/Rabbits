@@ -11,13 +11,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
 public class JwtService {
 
-  private static final String SECRET_KEY = "5166546A576E5A7234753778214125432A462D4A614E645267556B5870327335";
+  private final Environment environment;
+
+  private final String SECRET_KEY;
+
+  public JwtService(Environment environment) {
+    this.environment = environment;
+    this.SECRET_KEY = environment.getProperty("spring.auth.code");
+  }
 
   public String extractUsername(String token) {
     return extractClaim(token,Claims::getSubject);
