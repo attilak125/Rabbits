@@ -6,12 +6,12 @@ import java.time.LocalDate;
 public class TrainingDTO {
 
   private String type;
-  private LocalDate creationDate;
+  private LocalDate doDate;
   private String exercises;
 
-  public TrainingDTO(TrainingType type, LocalDate creationDate, String exercises) {
+  public TrainingDTO(TrainingType type, LocalDate doDate, String exercises) {
     this.type = type.toString();
-    this.creationDate = creationDate;
+    this.doDate = doDate;
     this.exercises = exercises;
   }
 
@@ -23,12 +23,12 @@ public class TrainingDTO {
     this.type = type.toString();
   }
 
-  public LocalDate getCreationDate() {
-    return creationDate;
+  public LocalDate getDoDate() {
+    return doDate;
   }
 
-  public void setCreationDate(LocalDate creationDate) {
-    this.creationDate = creationDate;
+  public void setDoDate(LocalDate doDate) {
+    this.doDate = doDate;
   }
 
   public String getExercises() {

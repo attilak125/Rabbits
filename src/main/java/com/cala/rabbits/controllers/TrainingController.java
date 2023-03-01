@@ -1,6 +1,7 @@
 package com.cala.rabbits.controllers;
 
 import com.cala.rabbits.exception.InvalidIdException;
+import com.cala.rabbits.exception.PathVariableMissingException;
 import com.cala.rabbits.exception.RequestBodyMissingException;
 import com.cala.rabbits.models.dto.TrainingDTO;
 import com.cala.rabbits.services.TrainingService;
@@ -24,7 +25,7 @@ public class TrainingController {
 
   @GetMapping("/trainings")
   public ResponseEntity findTrainings(){
-    return ResponseEntity.ok().body(trainingService.findallDTO());
+    return ResponseEntity.ok().body(trainingService.findallDto());
   }
 
   @PostMapping("/trainings")
@@ -34,6 +35,14 @@ public class TrainingController {
     }
     trainingService.addTraining(trainingDTO);
     return ResponseEntity.status(HttpStatus.CREATED).body(trainingDTO);
+  }
+
+  @GetMapping("/trainings/by/type/{type}")
+  public ResponseEntity findTrainingsByType(@PathVariable String type){
+    if (type == null){
+      throw new PathVariableMissingException();
+    }
+    return ResponseEntity.ok().body(trainingService.findTrainingsDtoByType(type));
   }
 
   @GetMapping("/trainings/{id}")

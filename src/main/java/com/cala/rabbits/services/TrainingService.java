@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface TrainingService {
 
-  List<TrainingDTO> findallDTO();
+  List<TrainingDTO> findallDto();
 
   void addTraining(TrainingDTO trainingDTO);
 
@@ -16,4 +16,6 @@ public interface TrainingService {
   boolean existsTrainingById(long id);
 
   TrainingDTO deleteTrainingById(long id);
+
+  List<TrainingDTO> findTrainingsDtoByType(String type);
 }

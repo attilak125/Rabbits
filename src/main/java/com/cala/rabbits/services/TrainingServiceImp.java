@@ -15,13 +15,13 @@ public class TrainingServiceImp implements TrainingService{
   }
 
   @Override
-  public List<TrainingDTO> findallDTO() {
+  public List<TrainingDTO> findallDto() {
     return trainingRepository.findAll().stream().map(this::trainingConvertToDTO).toList();
   }
 
   @Override
   public void addTraining(TrainingDTO trainingDTO) {
-    trainingRepository.save(new Training(trainingDTO.getType(),trainingDTO.getCreationDate(),trainingDTO.getExercises()));
+    trainingRepository.save(new Training(trainingDTO.getType(),trainingDTO.getDoDate(),trainingDTO.getExercises()));
   }
 
   @Override
@@ -42,15 +42,21 @@ public class TrainingServiceImp implements TrainingService{
   }
 
   @Override
+  public List<TrainingDTO> findTrainingsDtoByType(String type) {
+    return trainingRepository.findAllByType(type).stream().map(training -> trainingConvertToDTO(training)).toList();
+  }
+
+  @Override
   public void updateTraining(long id, TrainingDTO trainingDTO) {
     Training training = trainingRepository.findById(id).orElseThrow();
     training.setType(trainingDTO.getType());
-    training.setCreationDate(trainingDTO.getCreationDate());
+    training.setDoDate(trainingDTO.getDoDate());
     training.setExercises(trainingDTO.getExercises());
+    training.setDay(trainingDTO.getDoDate());
     trainingRepository.save(training);
   }
 
   private TrainingDTO trainingConvertToDTO(Training training){
-    return new TrainingDTO(training.getType(),training.getCreationDate(),training.getExercises());
+    return new TrainingDTO(training.getType(),training.getDoDate(),training.getExercises());
   }
 }

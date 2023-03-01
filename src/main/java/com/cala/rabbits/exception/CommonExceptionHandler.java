@@ -17,7 +17,7 @@ public class CommonExceptionHandler {
 
   @ExceptionHandler(value = InvalidIdException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  public ErrorResponseDto handleTrainingNotFoundException(InvalidIdException invalidIdException){
+  public ErrorResponseDto handleTrainingNotFoundException(){
     return new ErrorResponseDto(environment.getProperty("config.errors.invalid_id"));
   }
 
@@ -25,5 +25,11 @@ public class CommonExceptionHandler {
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   public ErrorResponseDto handleRequestBodyMissingException() {
     return new ErrorResponseDto(environment.getProperty("config.errors.request_body_missing"));
+  }
+
+  @ExceptionHandler(value = PathVariableMissingException.class)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  public ErrorResponseDto handlePathVariableMissingException() {
+    return new ErrorResponseDto(environment.getProperty("config.errors.path_variable_missing"));
   }
 }
