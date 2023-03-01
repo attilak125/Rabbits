@@ -3,7 +3,9 @@ package com.cala.rabbits.services;
 import com.cala.rabbits.models.Training;
 import com.cala.rabbits.models.dto.TrainingDTO;
 import com.cala.rabbits.repositories.TrainingRepository;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -44,6 +46,11 @@ public class TrainingServiceImp implements TrainingService{
   @Override
   public List<TrainingDTO> findTrainingsDtoByType(String type) {
     return trainingRepository.findAllByType(type).stream().map(training -> trainingConvertToDTO(training)).toList();
+  }
+
+  @Override
+  public Optional<Training> findTrainingByDoDate(LocalDate doDate) {
+    return trainingRepository.findByDoDate(doDate);
   }
 
   @Override

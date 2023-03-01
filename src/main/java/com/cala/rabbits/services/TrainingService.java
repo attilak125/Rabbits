@@ -1,7 +1,10 @@
 package com.cala.rabbits.services;
 
+import com.cala.rabbits.models.Training;
 import com.cala.rabbits.models.dto.TrainingDTO;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface TrainingService {
 
@@ -18,4 +21,6 @@ public interface TrainingService {
   TrainingDTO deleteTrainingById(long id);
 
   List<TrainingDTO> findTrainingsDtoByType(String type);
+
+  Optional<Training> findTrainingByDoDate(LocalDate doDate);
 }
