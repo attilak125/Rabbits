@@ -32,4 +32,9 @@ public class CommonExceptionHandler {
   public ErrorResponseDto handlePathVariableMissingException() {
     return new ErrorResponseDto(environment.getProperty("config.errors.path_variable_missing"));
   }
+  @ExceptionHandler(value = UserNotFoundException.class)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  public ErrorResponseDto handleUserNotFoundException() {
+    return new ErrorResponseDto(environment.getProperty("config.errors.user_not_found"));
+  }
 }

@@ -6,6 +6,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import java.util.Collection;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,8 @@ public class User implements UserDetails {
   private String emailVerificationToken;
   private String verifiedAt;
   private boolean enabled = false;
+  @OneToOne
+  private Pass pass;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

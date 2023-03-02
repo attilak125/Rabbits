@@ -23,6 +23,7 @@ public class UserServiceImp implements UserService{
     this.trainingservice = trainingservice;
   }
 
+
   @Scheduled(cron = "0 24 9 * * ?")
   private void dailyEmail(){
     List<String> emailList = userRepository.findAll().stream().map(user -> user.getEmail()).toList();
