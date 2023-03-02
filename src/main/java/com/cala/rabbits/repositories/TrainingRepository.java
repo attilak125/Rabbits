@@ -12,4 +12,5 @@ public interface TrainingRepository extends JpaRepository<Training,Long> {
 
   List<Training> findAllByType(String type);
   Optional<Training> findByDoDate(LocalDate doDate);
+  List<Training> findAllByWeek(int week);
 }
