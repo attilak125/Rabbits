@@ -69,6 +69,6 @@ public class TrainingController {
       throw new InvalidIdException();
     }
     TrainingDTO deletedTraining = trainingService.deleteTrainingById(id);
-    return ResponseEntity.ok().body(deletedTraining);
+    return ResponseEntity.status(202).body(deletedTraining);
   }
 }

@@ -27,8 +27,8 @@ public class UserController {
       return ResponseEntity.ok(authenticationService.register(request));
   }
 
-    @GetMapping("/email/verification/{emailVerificationToken}")
-    public ResponseEntity<AuthenticationResponse> emailVerification(@RequestBody AuthenticationRequest request, @PathVariable String emailVerificationToken){
+  @GetMapping("/email/verification/{emailVerificationToken}")
+  public ResponseEntity<AuthenticationResponse> emailVerification(@RequestBody AuthenticationRequest request, @PathVariable String emailVerificationToken){
     return ResponseEntity.ok(authenticationService.emailVerification(request, emailVerificationToken));
   }
 
