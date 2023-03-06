@@ -9,7 +9,6 @@ import com.cala.rabbits.models.training.dto.WodDTO;
 import com.cala.rabbits.repositories.training.SessionRepository;
 import com.cala.rabbits.repositories.training.TrainingRepository;
 import com.cala.rabbits.repositories.training.WodRepository;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -52,6 +51,26 @@ public class TrainingServiceImp implements TrainingService{
     List<Wod> wodList = trainingDTO.getExercises().stream().map(wod -> wodRepository.save(new Wod(wod.getExercises(),wod.getRounds(),training))).toList();
     optionalSession.get().setTraining(training);
     sessionRepository.save(optionalSession.get());
+  }
+
+  @Override
+  public void updateTraining(Long trainingId, TrainingDTO trainingDTO) {
+    Optional<Training> optionalTraining = trainingRepository.findById(trainingId);
+    if (!optionalTraining.isPresent()){
+      throw new InvalidIdException();
+    }
+    Training training = optionalTraining.get();
+    trainingRepository.save(training);
+    List<Wod> wodList = trainingDTO.getExercises().stream().map(wod -> wodRepository.save(new Wod(wod.getExercises(),wod.getRounds(),training))).toList();
+  }
+
+  @Override
+  public void deleteTraining(Long trainingId) {
+    Optional<Training> optionalTraining = trainingRepository.findById(trainingId);
+    if (!optionalTraining.isPresent()){
+      throw new InvalidIdException();
+    }
+    trainingRepository.delete(optionalTraining.get());
   }
 
   private TrainingDTO trainingConvertToDTO(Training training){

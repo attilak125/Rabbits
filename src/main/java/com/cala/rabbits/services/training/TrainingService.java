@@ -8,4 +8,7 @@ public interface TrainingService {
 
   void addTraining(Long sessionId,TrainingDTO trainingDTO);
 
+  void updateTraining(Long trainingId, TrainingDTO trainingDTO);
+
+  void deleteTraining(Long trainingId);
 }
