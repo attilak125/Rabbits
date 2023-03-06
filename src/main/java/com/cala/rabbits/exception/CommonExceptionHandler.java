@@ -37,4 +37,16 @@ public class CommonExceptionHandler {
   public ErrorResponseDto handleUserNotFoundException() {
     return new ErrorResponseDto(environment.getProperty("config.errors.user_not_found"));
   }
+
+  @ExceptionHandler(value = InvalidPassException.class)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  public ErrorResponseDto handleInvalidPassException() {
+    return new ErrorResponseDto(environment.getProperty("config.errors.invalid_pass"));
+  }
+
+  @ExceptionHandler(value = UserAlreadyJoinedSessionException.class)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  public ErrorResponseDto handleUserAlreadyJoinedSessionException() {
+    return new ErrorResponseDto(environment.getProperty("config.errors.user_already_joind_session"));
+  }
 }

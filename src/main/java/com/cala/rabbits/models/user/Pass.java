@@ -69,6 +69,9 @@ public class Pass {
 
   public void setAmountLeft(int amountLeft) {
     this.amountLeft = amountLeft;
+    if (amountLeft <= 0){
+      this.expired=true;
+    }
   }
 
   public void setExpired(boolean expired) {
