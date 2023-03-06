@@ -1,17 +1,20 @@
 package com.cala.rabbits.controllers.training;
 
+import com.cala.rabbits.exception.InvalidIdException;
 import com.cala.rabbits.exception.RequestBodyMissingException;
 import com.cala.rabbits.models.training.dto.TrainingDTO;
 import com.cala.rabbits.services.training.TrainingService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/training")
+@RequestMapping("session/training")
 public class TrainingController {
 
   private final TrainingService trainingService;
@@ -20,21 +23,23 @@ public class TrainingController {
     this.trainingService = trainingService;
   }
 
-  @GetMapping("/all")
-  public ResponseEntity findAllTrainings(){
-    return ResponseEntity.ok().body(trainingService.findallDto());
+  @GetMapping("/{sessionId}")
+  public ResponseEntity findAllTrainings(@PathVariable Long sessionId){
+    if (sessionId == null || sessionId < 1){
+      throw new InvalidIdException();
+    }
+    return ResponseEntity.ok().body(trainingService.findTrainingForSessionDto(sessionId));
   }
-//
-//  @GetMapping
-//  public ResponseEntity findCurrentWeeksTrainings(){
-//    return ResponseEntity.ok().body(trainingService.findCurrentWeeksTrainingsDTO());
-//  }
-  @PostMapping
-  public ResponseEntity addTraining(@RequestBody TrainingDTO trainingDTO){
+
+  @PostMapping("/{sessionId}")
+  public ResponseEntity addTraining(@PathVariable Long sessionId,@RequestBody TrainingDTO trainingDTO){
+    if (sessionId == null || sessionId < 1){
+      throw new InvalidIdException();
+    }
     if (trainingDTO==null){
       throw new RequestBodyMissingException();
     }
-    trainingService.addTraining(trainingDTO);
+    trainingService.addTraining(sessionId,trainingDTO);
     return ResponseEntity.status(HttpStatus.CREATED).body(trainingDTO);
   }
 //

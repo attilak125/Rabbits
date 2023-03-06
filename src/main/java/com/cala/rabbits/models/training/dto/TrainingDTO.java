@@ -7,10 +7,10 @@ import java.util.List;
 public class TrainingDTO {
 
   private String type;
-  private List<Wod> exercises;
+  private List<WodDTO> exercises;
 
-  public TrainingDTO(String type, List<Wod> exercises) {
-    this.type = type;
+  public TrainingDTO(TrainingType type, List<WodDTO> exercises) {
+    this.type = type.toString();
     this.exercises = exercises;
   }
 
@@ -22,11 +22,11 @@ public class TrainingDTO {
     this.type = type.toString();
   }
 
-  public List<Wod> getExercises() {
+  public List<WodDTO> getExercises() {
     return exercises;
   }
 
-  public void setExercises(List<Wod> exercises) {
+  public void setExercises(List<WodDTO> exercises) {
     this.exercises = exercises;
   }
 

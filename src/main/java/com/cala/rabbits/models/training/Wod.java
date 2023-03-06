@@ -21,6 +21,12 @@ public class Wod {
   @JoinColumn(name = "training_id")
   private Training training;
 
+  public Wod(String exercises, int rounds, Training training) {
+    this.exercises = exercises;
+    this.rounds = rounds;
+    this.training = training;
+  }
+
   public Wod(String exercises, int rounds) {
     this.exercises = exercises;
     this.rounds = rounds;
@@ -47,5 +53,13 @@ public class Wod {
 
   public void setRounds(int rounds) {
     this.rounds = rounds;
+  }
+
+  public Training getTraining() {
+    return training;
+  }
+
+  public void setTraining(Training training) {
+    this.training = training;
   }
 }

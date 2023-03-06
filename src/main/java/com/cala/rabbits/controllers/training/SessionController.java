@@ -47,4 +47,9 @@ public class SessionController {
     sessionService.removeParticipantFromSession(id,request);
     return ResponseEntity.status(202).build();
   }
+  @PostMapping
+  public ResponseEntity createSessionForToday(){
+    sessionService.createSession();
+    return ResponseEntity.ok().build();
+  }
 }

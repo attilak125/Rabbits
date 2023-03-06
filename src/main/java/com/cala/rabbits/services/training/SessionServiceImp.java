@@ -66,6 +66,11 @@ public class SessionServiceImp implements SessionService{
     sessionRepository.save(session);
   }
 
+  @Override
+  public void createSession() {
+    sessionRepository.save(new Session(LocalDate.now()));
+  }
+
   @Scheduled(cron = "0 25 14 * * 5")
   private void createCurrentWeeksSessions(){
     for(int i = 3; i < 8; i++) {

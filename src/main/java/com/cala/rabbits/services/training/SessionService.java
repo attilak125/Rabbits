@@ -12,4 +12,6 @@ public interface SessionService {
   List<SessionsDTO> findAllSessionCurrentWeek();
 
   void removeParticipantFromSession(Long id, RemoveFromSessionRequest request);
+
+  void createSession();
 }
