@@ -1,14 +1,12 @@
 package com.cala.rabbits.config;
 
-import com.cala.rabbits.models.dto.AuthenticationRequest;
-import com.cala.rabbits.models.dto.AuthenticationResponse;
-import com.cala.rabbits.models.dto.EmailVerificationRequest;
-import com.cala.rabbits.models.dto.RegisterRequest;
-import com.cala.rabbits.models.User;
-import com.cala.rabbits.repositories.UserRepository;
+import com.cala.rabbits.models.user.User;
+import com.cala.rabbits.models.user.dto.AuthenticationRequest;
+import com.cala.rabbits.models.user.dto.AuthenticationResponse;
+import com.cala.rabbits.models.user.dto.RegisterRequest;
+import com.cala.rabbits.repositories.user.UserRepository;
 import com.cala.rabbits.services.EmailService;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

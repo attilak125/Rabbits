@@ -1,6 +1,6 @@
 package com.cala.rabbits.config;
 
-import com.cala.rabbits.repositories.UserRepository;
+import com.cala.rabbits.repositories.user.UserRepository;
 import java.util.Properties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

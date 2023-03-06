@@ -1,6 +1,6 @@
 package com.cala.rabbits.exception;
 
-import com.cala.rabbits.models.dto.ErrorResponseDto;
+import com.cala.rabbits.models.training.dto.ErrorResponseDto;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
