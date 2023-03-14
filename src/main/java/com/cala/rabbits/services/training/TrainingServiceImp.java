@@ -3,7 +3,7 @@ package com.cala.rabbits.services.training;
 import com.cala.rabbits.exception.InvalidIdException;
 import com.cala.rabbits.models.training.Session;
 import com.cala.rabbits.models.training.Training;
-import com.cala.rabbits.models.training.Wod;
+import com.cala.rabbits.models.training.TrainingType;import com.cala.rabbits.models.training.Wod;
 import com.cala.rabbits.models.training.dto.TrainingDTO;
 import com.cala.rabbits.models.training.dto.WodDTO;
 import com.cala.rabbits.repositories.training.SessionRepository;
@@ -46,9 +46,9 @@ public class TrainingServiceImp implements TrainingService{
     if (!optionalSession.isPresent()){
       throw new InvalidIdException();
     }
-    Training training = new Training(trainingDTO.getType());
+    Training training = new Training(TrainingType.valueOf(trainingDTO.type()));
     trainingRepository.save(training);
-    List<Wod> wodList = trainingDTO.getExercises().stream().map(wod -> wodRepository.save(new Wod(wod.getExercises(),wod.getRounds(),training))).toList();
+    List<Wod> wodList = trainingDTO.exercises().stream().map(wod -> wodRepository.save(new Wod(wod.exercises(),wod.rounds(),training))).toList();
     optionalSession.get().setTraining(training);
     sessionRepository.save(optionalSession.get());
   }
@@ -61,7 +61,10 @@ public class TrainingServiceImp implements TrainingService{
     }
     Training training = optionalTraining.get();
     trainingRepository.save(training);
-    List<Wod> wodList = trainingDTO.getExercises().stream().map(wod -> wodRepository.save(new Wod(wod.getExercises(),wod.getRounds(),training))).toList();
+    List<Wod> wodList =
+        trainingDTO.exercises().stream()
+            .map(wod -> wodRepository.save(new Wod(wod.exercises(), wod.rounds(), training)))
+            .toList();
   }
 
   @Override
@@ -74,7 +77,7 @@ public class TrainingServiceImp implements TrainingService{
   }
 
   private TrainingDTO trainingConvertToDTO(Training training){
-    return new TrainingDTO(training.getType(), training.getWods().stream().map(wod -> wodConvertToDto(wod)).toList());
+    return new TrainingDTO(training.getType().toString(), training.getWods().stream().map(wod -> wodConvertToDto(wod)).toList());
   }
 
   private WodDTO wodConvertToDto(Wod wod){

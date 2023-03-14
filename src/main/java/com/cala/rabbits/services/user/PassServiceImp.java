@@ -2,6 +2,7 @@ package com.cala.rabbits.services.user;
 
 import com.cala.rabbits.exception.InvalidIdException;
 import com.cala.rabbits.exception.UserNotFoundException;
+import com.cala.rabbits.models.training.dto.PassDTO;
 import com.cala.rabbits.models.user.Pass;
 import com.cala.rabbits.models.user.User;
 import com.cala.rabbits.models.training.dto.PassCreationRequest;
@@ -52,5 +53,14 @@ public class PassServiceImp implements PassService{
     Pass pass = passRepository.findById(id).get();
     pass.setCreationDate(request.getCreationDate());
     passRepository.save(pass);
+  }
+
+  @Override
+  public PassDTO findPassById(Long id) {
+    if(!passRepository.existsById(id)){
+      throw new InvalidIdException();
+    }
+    Pass pass = passRepository.findById(id).get();
+    return new PassDTO(pass.getAmountLeft(),pass.getCreationDate(),pass.getExpiresOn(),pass.isExpired());
   }
 }

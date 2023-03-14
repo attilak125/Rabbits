@@ -1,9 +1,9 @@
 package com.cala.rabbits.controllers.user;
 
 import com.cala.rabbits.exception.InvalidIdException;
+import com.cala.rabbits.models.training.dto.PassDTO;
 import com.cala.rabbits.models.user.Pass;
 import com.cala.rabbits.models.training.dto.PassCreationRequest;
-import com.cala.rabbits.models.training.dto.PassRequest;
 import com.cala.rabbits.models.training.dto.PassUpdateRequest;
 import com.cala.rabbits.services.user.PassService;
 import org.springframework.http.HttpStatus;
@@ -26,9 +26,12 @@ public class PassController {
     this.passService = passService;
   }
 
-  @GetMapping
-  public ResponseEntity<Pass> getPass(@RequestBody PassRequest request) {
-    return null;
+  @GetMapping("/{id}")
+  public ResponseEntity<PassDTO> getPass(@PathVariable Long id) {
+    if (id<=0){
+      throw new InvalidIdException();
+    }
+    return ResponseEntity.ok().body(passService.findPassById(id));
   }
 
   @PostMapping

@@ -5,7 +5,6 @@ import com.cala.rabbits.models.user.dto.AuthenticationRequest;
 import com.cala.rabbits.models.user.dto.AuthenticationResponse;
 import com.cala.rabbits.models.user.dto.RegisterRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +26,7 @@ public class UserController {
       return ResponseEntity.ok(authenticationService.register(request));
   }
 
-  @GetMapping("/email/verification/{emailVerificationToken}")
+  @PostMapping("/email/verification/{emailVerificationToken}")
   public ResponseEntity<AuthenticationResponse> emailVerification(@RequestBody AuthenticationRequest request, @PathVariable String emailVerificationToken){
     return ResponseEntity.ok(authenticationService.emailVerification(request, emailVerificationToken));
   }
